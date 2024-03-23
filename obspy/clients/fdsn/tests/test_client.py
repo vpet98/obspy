@@ -281,18 +281,13 @@ class TestClient():
             with mock.patch("obspy.clients.fdsn.Client._download") as p:
                 self.client.get_waveforms(1, 2, loc, 4, 0, 0,
                                           filename=mock.Mock())
-<<<<<<< HEAD
             assert p.call_count == 1
             assert "location=--" in p.call_args[0][0]
-=======
-            self.assertEqual(p.call_count, 1)
-            self.assertIn("location=--", p.call_args[0][0])
             with mock.patch("obspy.clients.fdsn.Client._download") as p:
                 self.client.get_availability(1, 2, loc, 4, 0, 0,
                                              filename=mock.Mock())
-            self.assertEqual(p.call_count, 1)
-            self.assertIn("location=--", p.call_args[0][0])
->>>>>>> contributor/fdsn-client-getavailability
+            assert p.call_count == 1
+            assert "location=--" in p.call_args[0][0]
 
     def test_url_building_with_auth(self):
         """
@@ -355,7 +350,6 @@ class TestClient():
         This will have to be adjusted once IRIS changes their implementation.
         """
         client = self.client
-<<<<<<< HEAD
         assert {*client.services.keys()} == \
             {"dataselect", "event", "station", "available_event_contributors",
              "available_event_catalogs"}
@@ -381,45 +375,6 @@ class TestClient():
              "updatedafter", "includeallorigins", "includeallmagnitudes",
              "includearrivals", "eventid",
              "originid"}  # XXX: This is currently just specified in the WADL
-=======
-        self.assertEqual(set(client.services.keys()),
-                         set(("dataselect", "event", "station",
-                              "available_event_contributors",
-                              "available_event_catalogs", "availability")))
-
-        # The test sets are copied from the IRIS webpage.
-        self.assertEqual(
-            set(client.services["dataselect"].keys()),
-            set(("starttime", "endtime", "network", "station", "location",
-                 "channel", "quality", "minimumlength", "longestonly")))
-        self.assertEqual(
-            set(client.services["station"].keys()),
-            set(("starttime", "endtime", "startbefore", "startafter",
-                 "endbefore", "endafter", "network", "station", "location",
-                 "channel", "minlatitude", "maxlatitude", "minlongitude",
-                 "maxlongitude", "latitude", "longitude", "minradius",
-                 "maxradius", "level", "includerestricted", "format",
-                 "includeavailability", "updatedafter", "matchtimeseries")))
-        self.assertEqual(
-            set(client.services["event"].keys()),
-            set(("starttime", "endtime", "minlatitude", "maxlatitude",
-                 "minlongitude", "maxlongitude", "latitude", "longitude",
-                 "maxradius", "minradius", "mindepth", "maxdepth",
-                 "minmagnitude", "maxmagnitude",
-                 "magnitudetype", "format",
-                 "catalog", "contributor", "limit", "offset", "orderby",
-                 "updatedafter", "includeallorigins", "includeallmagnitudes",
-                 "includearrivals", "eventid",
-                 "originid"  # XXX: This is currently just specified in the
-                             #      WADL.
-                 )))
-        self.assertEqual(
-            set(client.services['availability'].keys()),
-            set(('starttime', 'endtime', 'network', 'station', 'location',
-                 'channel', 'merge', 'show', 'format', 'mergegaps', 'orderby',
-                 'location', 'limit', 'includerestricted', 'quality'
-                 )))
->>>>>>> contributor/fdsn-client-getavailability
 
         # Also check an exemplary value in more detail.
         minradius = client.services["event"]["minradius"]
@@ -1370,16 +1325,7 @@ class TestClient():
         """
         client = Client(base_url="IRIS", user_agent=USER_AGENT,
                         service_mappings={"event": None})
-<<<<<<< HEAD
         assert sorted(client.services.keys()) == ['dataselect', 'station']
-=======
-        self.assertEqual(sorted(client.services.keys()),
-                         ['availability', 'dataselect', 'station'])
-        client = Client(base_url="IRIS", user_agent=USER_AGENT,
-                        service_mappings={"availability": None})
-        self.assertEqual(sorted(client.services.keys()),
-                         ['available_event_catalogs', 'available_event_contributors', 'dataselect', 'event', 'station'])
->>>>>>> contributor/fdsn-client-getavailability
 
     @mock.patch("obspy.clients.fdsn.client.download_url")
     def test_download_urls_for_custom_mapping(
