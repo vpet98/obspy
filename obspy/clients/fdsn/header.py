@@ -181,7 +181,7 @@ DEFAULT_AVAILABILITY_PARAMETERS = [
 ]
 
 OPTIONAL_AVAILABILITY_PARAMETERS = [
-    "quality", "orderby", "limit", "format", "mergegaps"
+    "quality", "orderby", "limit", "format", "mergegaps", "merge", "show"
 ]
 
 DEFAULT_PARAMETERS = {
@@ -262,6 +262,8 @@ DEFAULT_TYPES = {
     "updatedafter": UTCDateTime,
     "format": str,
     "mergegaps": float,
+    "merge": str,
+    "show": str,
     }
 
 DEFAULT_VALUES = {
@@ -307,6 +309,8 @@ DEFAULT_VALUES = {
     "contributor": None,
     "updatedafter": None,
     "mergegaps": 0.0,
+    "merge": None,
+    "show": None,
 }
 
 # This creates a services dictionary containing default and optional services,
