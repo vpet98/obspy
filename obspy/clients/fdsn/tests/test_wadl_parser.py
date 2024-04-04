@@ -144,7 +144,7 @@ class TestWADLParser():
         # The nodata attribute should not be parsed.
         assert not ("nodata" in params)
 
-    def test_station_wadl_parsing(self):
+    def test_station_wadl_parsing(self, testdata):
         """
         Tests the parsing of a station wadl.
         """

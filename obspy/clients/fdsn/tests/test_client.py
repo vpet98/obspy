@@ -12,6 +12,7 @@ The obspy.clients.fdsn.client test suite.
 import io
 import re
 import sys
+import os
 import warnings
 from difflib import Differ
 from unittest import mock
@@ -511,10 +512,10 @@ class TestClient():
 
         # check that the structure of the list is as we expect
         self.assertTrue(
-            all([type(list_item) == tuple for list_item in avail]))
+            all([isinstance(list_item, tuple) for list_item in avail]))
         self.assertTrue(all([len(list_item) == 6 for list_item in avail]))
-        self.assertTrue(all([[type(x) for x in list_item] == [
-                        str, str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
+        self.assertTrue(all([[type(x) for x in list_item] == [str,
+            str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
 
         # check that the network and station are as we expect
         self.assertTrue(all([list_item[0] == 'IU' for list_item in avail]))
@@ -537,10 +538,10 @@ class TestClient():
 
         # check that the structure of the list is as we expect
         self.assertTrue(
-            all([type(list_item) == tuple for list_item in avail]))
+            all([isinstance(list_item, tuple) for list_item in avail]))
         self.assertTrue(all([len(list_item) == 6 for list_item in avail]))
-        self.assertTrue(all([[type(x) for x in list_item] == [
-                        str, str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
+        self.assertTrue(all([[type(x) for x in list_item] == [str,
+            str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
 
         # check that the network and station are as we expect
         self.assertTrue(all([list_item[0] == 'IU' for list_item in avail]))
@@ -550,14 +551,17 @@ class TestClient():
     def test_get_availability_bounded_query_auth(self):
         """
         Tests a bounded (in time) example query
-        Available Data from network IU, station ANMO, channel BHZ for a given time interval
-        http://service.iris.edu/fdsnws/availability/1/query?network=IU&station=ANMO&channel=BHZ&start=2000-03-23T00:00:00&end=2001-03-23T00:00:00
+        Available Data from network IU, station ANMO,
+        channel BHZ for a given time interval
+        http://service.iris.edu/fdsnws/availability/1/query?network=IU&station
+        =ANMO&channel=BHZ&start=2000-03-23T00:00:00&end=2001-03-23T00:00:00
         """
         client = self.client_auth
         starttime = UTCDateTime('2000-03-23T00:00:00')
         endtime = UTCDateTime('2001-03-23T00:00:00')
         avail = client.get_availability(
-            network='IU', station='ANMO', channel="BHZ", starttime=starttime, endtime=endtime)
+            network='IU', station='ANMO', channel="BHZ",
+            starttime=starttime, endtime=endtime)
 
         # check that we have a list
         self.assertIsInstance(avail, list)
@@ -565,10 +569,10 @@ class TestClient():
 
         # check that the structure of the list is as we expect
         self.assertTrue(
-            all([type(list_item) == tuple for list_item in avail]))
+            all([isinstance(list_item, tuple) for list_item in avail]))
         self.assertTrue(all([len(list_item) == 6 for list_item in avail]))
-        self.assertTrue(all([[type(x) for x in list_item] == [
-                    str, str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
+        self.assertTrue(all([[type(x) for x in list_item] == [str,
+            str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
 
         # check that the network, station, and channel are as we expect
         self.assertTrue(all([list_item[0] == 'IU' for list_item in avail]))
@@ -586,14 +590,17 @@ class TestClient():
     def test_get_availability_bounded_query(self):
         """
         Tests a bounded (in time) example query
-        Available Data from network IU, station ANMO, channel BHZ for a given time interval
-        http://service.iris.edu/fdsnws/availability/1/query?network=IU&station=ANMO&channel=BHZ&start=2000-03-23T00:00:00&end=2001-03-23T00:00:00
+        Available Data from network IU, station ANMO,
+        channel BHZ for a given time interval
+        http://service.iris.edu/fdsnws/availability/1/query?network=IU&station
+        =ANMO&channel=BHZ&start=2000-03-23T00:00:00&end=2001-03-23T00:00:00
         """
         client = self.client
         starttime = UTCDateTime('2000-03-23T00:00:00')
         endtime = UTCDateTime('2001-03-23T00:00:00')
         avail = client.get_availability(
-            network='IU', station='ANMO', channel="BHZ", starttime=starttime, endtime=endtime)
+            network='IU', station='ANMO', channel="BHZ",
+            starttime=starttime, endtime=endtime)
 
         # check that we have a list
         self.assertIsInstance(avail, list)
@@ -601,10 +608,10 @@ class TestClient():
 
         # check that the structure of the list is as we expect
         self.assertTrue(
-            all([type(list_item) == tuple for list_item in avail]))
+            all([isinstance(list_item, tuple) for list_item in avail]))
         self.assertTrue(all([len(list_item) == 6 for list_item in avail]))
-        self.assertTrue(all([[type(x) for x in list_item] == [
-                    str, str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
+        self.assertTrue(all([[type(x) for x in list_item] == [str,
+            str, str, str, UTCDateTime, UTCDateTime] for list_item in avail]))
 
         # check that the network, station, and channel are as we expect
         self.assertTrue(all([list_item[0] == 'IU' for list_item in avail]))
